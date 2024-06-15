@@ -1,6 +1,7 @@
 ﻿//! Capture 3. Binary Encoding
 
 pub use sbi_spec::binary::SbiRet;
+const AX_SBI_ECALL:usize = 0xF_0000_0000;
 
 #[inline(always)]
 pub(crate) fn sbi_call_0(eid: usize, fid: usize) -> SbiRet {
@@ -8,7 +9,7 @@ pub(crate) fn sbi_call_0(eid: usize, fid: usize) -> SbiRet {
     unsafe {
         core::arch::asm!(
             "ecall",
-            in("a7") eid,
+            in("a7") eid | AX_SBI_ECALL,
             in("a6") fid,
             lateout("a0") error,
             lateout("a1") value,
@@ -23,7 +24,7 @@ pub(crate) fn sbi_call_1(eid: usize, fid: usize, arg0: usize) -> SbiRet {
     unsafe {
         core::arch::asm!(
             "ecall",
-            in("a7") eid,
+            in("a7") eid | AX_SBI_ECALL,
             in("a6") fid,
             inlateout("a0") arg0 => error,
             lateout("a1") value,
@@ -38,7 +39,7 @@ pub(crate) fn sbi_call_2(eid: usize, fid: usize, arg0: usize, arg1: usize) -> Sb
     unsafe {
         core::arch::asm!(
             "ecall",
-            in("a7") eid,
+            in("a7") eid | AX_SBI_ECALL,
             in("a6") fid,
             inlateout("a0") arg0 => error,
             inlateout("a1") arg1 => value,
@@ -53,7 +54,7 @@ pub(crate) fn sbi_call_3(eid: usize, fid: usize, arg0: usize, arg1: usize, arg2:
     unsafe {
         core::arch::asm!(
             "ecall",
-            in("a7") eid,
+            in("a7") eid | AX_SBI_ECALL,
             in("a6") fid,
             inlateout("a0") arg0 => error,
             inlateout("a1") arg1 => value,
@@ -76,7 +77,7 @@ pub(crate) fn sbi_call_4(
     unsafe {
         core::arch::asm!(
             "ecall",
-            in("a7") eid,
+            in("a7") eid | AX_SBI_ECALL,
             in("a6") fid,
             inlateout("a0") arg0 => error,
             inlateout("a1") arg1 => value,
@@ -101,7 +102,7 @@ pub(crate) fn sbi_call_5(
     unsafe {
         core::arch::asm!(
             "ecall",
-            in("a7") eid,
+            in("a7") eid | AX_SBI_ECALL,
             in("a6") fid,
             inlateout("a0") arg0 => error,
             inlateout("a1") arg1 => value,
@@ -129,7 +130,7 @@ pub(crate) fn sbi_call_6(
     unsafe {
         core::arch::asm!(
             "ecall",
-            in("a7") eid,
+            in("a7") eid | AX_SBI_ECALL,
             in("a6") fid,
             inlateout("a0") arg0 => error,
             inlateout("a1") arg1 => value,

@@ -2,6 +2,8 @@
 
 pub use sbi_spec::legacy::*;
 
+const AX_SBI_ECALL:usize = 0xF_0000_0000;
+
 /// §5.1
 #[deprecated = "replaced by `set_timer` from Timer extension"]
 #[inline]
@@ -93,7 +95,7 @@ fn sbi_call_legacy_0(eid: usize) -> usize {
     unsafe {
         core::arch::asm!(
             "ecall",
-            in("a7") eid,
+            in("a7") eid | AX_SBI_ECALL,
             lateout("a0") error,
         );
     }
@@ -106,7 +108,7 @@ fn sbi_call_legacy_1(eid: usize, arg0: usize) -> usize {
     unsafe {
         core::arch::asm!(
             "ecall",
-            in("a7") eid,
+            in("a7") eid | AX_SBI_ECALL,
             inlateout("a0") arg0 => error,
         );
     }
@@ -120,7 +122,7 @@ fn sbi_call_legacy_2(eid: usize, arg0: usize, arg1: usize) -> usize {
     unsafe {
         core::arch::asm!(
             "ecall",
-            in("a7") eid,
+            in("a7") eid | AX_SBI_ECALL,
             inlateout("a0") arg0 => error,
             in("a1") arg1,
         );
@@ -134,7 +136,7 @@ fn sbi_call_legacy_3(eid: usize, arg0: usize, arg1: usize, arg2: usize) -> usize
     unsafe {
         core::arch::asm!(
             "ecall",
-            in("a7") eid,
+            in("a7") eid | AX_SBI_ECALL,
             inlateout("a0") arg0 => error,
             in("a1") arg1,
             in("a2") arg2,
@@ -149,7 +151,7 @@ fn sbi_call_legacy_4(eid: usize, arg0: usize, arg1: usize, arg2: usize, arg3: us
     unsafe {
         core::arch::asm!(
             "ecall",
-            in("a7") eid,
+            in("a7") eid | AX_SBI_ECALL,
             inlateout("a0") arg0 => error,
             in("a1") arg1,
             in("a2") arg2,
